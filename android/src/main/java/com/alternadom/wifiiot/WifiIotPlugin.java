@@ -658,16 +658,16 @@ public class WifiIotPlugin implements MethodCallHandler, EventChannel.StreamHand
         }
 
         List<WifiConfiguration> mWifiConfigList = moWiFi.getConfiguredNetworks();
+        boolean success = false;
         for (WifiConfiguration wifiConfig : mWifiConfigList) {
             String comparableSSID = ('"' + prefix_ssid); //Add quotes because wifiConfig.SSID has them
             if (wifiConfig.SSID.startsWith(comparableSSID)) {
                 moWiFi.removeNetwork(wifiConfig.networkId);
                 moWiFi.saveConfiguration();
-                poResult.success(true);
-                return;
+                success=true;
             }
         }
-        poResult.success(false);
+        poResult.success(success);
     }
 
     /// This method will remove the WiFi network as per the passed SSID from the device list
